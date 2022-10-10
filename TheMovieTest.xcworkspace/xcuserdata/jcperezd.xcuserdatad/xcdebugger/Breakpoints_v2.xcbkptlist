@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "7EB14549-2188-4F31-86D7-F66F917108A4"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B712AA48-734C-454C-8519-9A337E853EB5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/LoginVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "makeLogin(with:and:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6268B0D-B02F-41B0-8CBC-A4ACA2BF9E99"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/LoginVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "handleLogin()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "532A610E-9A0C-43D2-9E98-FC2EC4E2062F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/ServiceConnector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "makeRequest(with:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B489D069-6243-4A59-9121-B28B27E36196"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/ServiceConnector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "makeRequest(with:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B489D069-6243-4A59-9121-B28B27E36196 - 72d197e7a01b5f2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.ServiceConnector.makeRequest(with: TheMovieTest.Constants.Request, completion: (Swift.Result&lt;Foundation.Data, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/ServiceConnector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "1879">
+               </Location>
+               <Location
+                  uuid = "B489D069-6243-4A59-9121-B28B27E36196 - c4510b330381f862"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TheMovieTest.ServiceConnector.makeRequest(with: TheMovieTest.Constants.Request, completion: (Swift.Result&lt;Foundation.Data, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/ServiceConnector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "264">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81516934-897B-4D82-9251-078F96019DD3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/ServiceConnector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "makeRequest(with:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "00464A5B-AE3D-477F-91BE-5D3CF251CB5B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "getUserProfile(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "00464A5B-AE3D-477F-91BE-5D3CF251CB5B - bbe13324f9049896"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.LoginService.getUserProfile(completion: (Swift.Result&lt;Swift.Bool, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/Login/LoginService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "71">
+               </Location>
+               <Location
+                  uuid = "00464A5B-AE3D-477F-91BE-5D3CF251CB5B - 7e239af7d5794fdf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, TheMovieTest.CustomError&gt;) -&gt; () in TheMovieTest.LoginService.getUserProfile(completion: (Swift.Result&lt;Swift.Bool, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/Login/LoginService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "325">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "714599CB-55D4-4BAB-B8E0-C57013BAC48F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "getUserProfile(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5BDFF348-7EB3-4377-B8C1-DB4E495C7A47"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "getUserProfile(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5EFBDB8C-91FA-4139-A7FF-C0C492BEC997"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "getUserProfile(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A9BACAC-CD03-467F-8386-3197A0C946F1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "createSession(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0BED9E85-BA6B-487E-8430-B35EB9006A52"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Login/LoginService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "createSession(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0BED9E85-BA6B-487E-8430-B35EB9006A52 - 40b688cc8dd27164"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.LoginService.createSession(completion: (Swift.Result&lt;Swift.Bool, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/Login/LoginService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "71">
+               </Location>
+               <Location
+                  uuid = "0BED9E85-BA6B-487E-8430-B35EB9006A52 - 97698515081a7a52"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, TheMovieTest.CustomError&gt;) -&gt; () in TheMovieTest.LoginService.createSession(completion: (Swift.Result&lt;Swift.Bool, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/Login/LoginService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "314">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B0E9BA7-70A6-4BFF-B926-4AB038242879"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/MoviesService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "fetchMovies(with:and:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7B0E9BA7-70A6-4BFF-B926-4AB038242879 - 813f8957f744f942"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.MoviesService.fetchMovies(with: TheMovieTest.Constants.MovieType, and: Swift.Bool, completion: (Swift.Result&lt;Swift.Array&lt;TheMovieTest.Movie&gt;, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/MoviesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "515">
+               </Location>
+               <Location
+                  uuid = "7B0E9BA7-70A6-4BFF-B926-4AB038242879 - 5fe2732268d065d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, TheMovieTest.CustomError&gt;) -&gt; () in TheMovieTest.MoviesService.fetchMovies(with: TheMovieTest.Constants.MovieType, and: Swift.Bool, completion: (Swift.Result&lt;Swift.Array&lt;TheMovieTest.Movie&gt;, TheMovieTest.CustomError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/MoviesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "306">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "24EB8CAE-716C-4A69-A301-701ECE0A54F1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/MoviesService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "fetchMovies(with:and:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE73E58B-1ECB-4152-A3B9-1AF3FA61F5FE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/Detail/MovieDetailVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "showMovieDetail()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "842193D0-1EBD-48D7-B87E-A290C0C17627"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieTest/MovieCollectionViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "configure(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "842193D0-1EBD-48D7-B87E-A290C0C17627 - db91187f4f92fef8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.MovieCollectionViewCell.configure(with: TheMovieTest.Movie) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/MovieCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "1012">
+               </Location>
+               <Location
+                  uuid = "842193D0-1EBD-48D7-B87E-A290C0C17627 - db91187f4f92fef8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheMovieTest.MovieCollectionViewCell.configure(with: TheMovieTest.Movie) -&gt; ()"
+                  moduleName = "TheMovieTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jcperezd/Desktop/Examples%20iOS/TheMovieTest/TheMovieTest/MovieCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "1054">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
