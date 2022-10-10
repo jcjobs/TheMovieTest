@@ -75,9 +75,6 @@ class LoginVC: UIViewController {
     }
     
     func setupView() {
-        userNameTextfield.text = "jcjobs"
-        passwordTextField.text = "32164JCy"
-        
         if let navigation = navigationController {
             coordinator = Coordinator(navigation)
         }
