@@ -16,26 +16,41 @@ enum CustomError: Error {
     case parsing
     case rageOutOfIndex
     
-    var message: String {
+    case invalidURL
+    case responseError
+    case unknown
+
+    var errorDescription: String? {
         switch self {
         case .custom(let code, let message):
-            return  "\(message) \nError code: \(code)"
+            return NSLocalizedString("\(message) \nError code: \(code)", comment: "\(message) \nError code: \(code)")
             
         case .badUrl:
-            return "Bad URL"
+            return NSLocalizedString("Bad URL", comment: "Bad URL")
             
         case .rageOutOfIndex:
-            return "No more items to fetch"
+            return NSLocalizedString("No more items to fetch", comment: "No more items to fetch")
             
         case .parsing:
-           return "Bad result"
+            return NSLocalizedString("Bad result", comment: "Bad result")
             
         case .internetConnection:
-            return "The internet connection appears to be offline"
+            return NSLocalizedString("The internet connection appears to be offline", comment: "The internet connection appears to be offline")
             
-        default:
-            return "Unknown error"
-
+        case .invalidURL:
+            return NSLocalizedString("Invalid URL", comment: "Invalid URL")
+            
+        case .responseError:
+            return NSLocalizedString("Unexpected status code", comment: "Invalid response")
+            
+        case .unknown:
+            return NSLocalizedString("Unknown error", comment: "Unknown error")
+            
+        case .badRequest:
+            return NSLocalizedString("Unexpected status code", comment: "Invalid request")
+            
+        case .loginFailed(message: let message):
+            return NSLocalizedString(message, comment: message)
         }
     }
 }

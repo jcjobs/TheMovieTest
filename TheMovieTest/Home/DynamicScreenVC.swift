@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class DynamicScreenVC: UIViewController {
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -31,6 +33,7 @@ class DynamicScreenVC: UIViewController {
     private var moviesData: [Movie]?
     private var coordinator: CoordinatorProtocol?
     private var initialLoadComplete: Bool = false
+    private var bag = Set<AnyCancellable>()
 
     init(with movieType: Constants.MovieType, and coordinator: CoordinatorProtocol?) {
         viewModel = DyamicScreenVM(with: movieType)
@@ -71,51 +74,44 @@ class DynamicScreenVC: UIViewController {
     }
     
     private func subscribe() {
-        viewModel.isLoading = handleisLoading()
-        viewModel.didFetchData = handleFetchedData()
-        viewModel.processError = handleError()
-    }
-    
-    private func handleisLoading() -> ((Bool) -> Void) {
-        return { [weak self] isLoading in
-            DispatchQueue.main.async {
+        viewModel.isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
                 if isLoading {
                     self?.loadingView.startAnimating()
                 } else {
                     self?.loadingView.stopAnimating()
                 }
             }
-        }
-    }
-    
-    private func handleFetchedData() -> (([Movie]?) -> Void) {
-        return { [weak self] dataResult in
-            if self?.initialLoadComplete == false {
-                self?.moviesData = dataResult
-            } else if let dataResulttt = dataResult {
-                self?.moviesData?.append(contentsOf: dataResulttt)
-            }
-            self?.initialLoadComplete = true
-            
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
-    }
-    
-    private func handleError() -> ((CustomError) -> Void) {
-        return { [weak self] processError in
-            DispatchQueue.main.async {
+            .store(in: &bag)
+        
+        viewModel.didFetchData
+            .receive(on: RunLoop.main)
+            .sink { [weak self] dataResult in
+                if self?.initialLoadComplete == false {
+                    self?.moviesData = dataResult
+                } else if let dataResulttt = dataResult {
+                    self?.moviesData?.append(contentsOf: dataResulttt)
+                }
+                self?.initialLoadComplete = true
+                
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+            }.store(in: &bag)
+        
+        viewModel.processError
+            .receive(on: RunLoop.main)
+            .sink { [weak self] processError in
                 self?.coordinator?.presentErrror(with: processError)
-            }
-        }
+            }.store(in: &bag)
     }
 }
 
 extension DynamicScreenVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedMovie = moviesData?[safe: indexPath.row] else { return }
-        coordinator?.presentMovieDetail(with: selectedMovie)
+        coordinator?.showMovieDetail(with: selectedMovie)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -144,5 +140,21 @@ extension DynamicScreenVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 30)/2
         return CGSize(width: width, height: 350)
+    }
+}
+
+
+
+
+struct DynamicScreenVCRepresentable : UIViewControllerRepresentable {
+    typealias UIViewControllerType = DynamicScreenVC
+    let movieType: Constants.MovieType
+    
+    func makeUIViewController(context: Context) -> DynamicScreenVC {
+        return DynamicScreenVC(with: movieType, and: nil)
+    }
+    
+    func updateUIViewController(_ uiViewController: DynamicScreenVC, context: Context) {
+        
     }
 }

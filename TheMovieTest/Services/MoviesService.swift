@@ -6,61 +6,64 @@
 //
 
 import Foundation
+import Combine
 
 class MoviesService {
     private let service: ServiceProtocol
     private var pageIndex: Int = 1
     private var hastNextPage: Bool = false
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         service = ServiceConnector()
     }
 
-    func fetchMovies(with movieType: Constants.MovieType, and fromScratch: Bool, completion: @escaping(Result<[Movie], CustomError>) -> Void ) {
-        if fromScratch {
-            pageIndex = 1
-        } else {
-            guard hastNextPage else {
-                completion(.failure(.rageOutOfIndex))
-                return
-            }
-            pageIndex += 1
-        }
-        
-        service.makeRequest(with: .movies(type: movieType, page: pageIndex)) { [weak self] result in
-            switch result {
-            case .success(let dataResult):
-                do {
-                    let decoder = JSONDecoder()
-                    let movies = try decoder.decode(Movies.self, from: dataResult)
-                    self?.hastNextPage = movies.totalPages > self?.pageIndex ?? 0
-                    completion(.success(movies.listOfmovies))
-                } catch {
-                    completion(.failure(.parsing))
+    func fetchMoviesCO(with movieType: Constants.MovieType, and fromScratch: Bool) -> AnyPublisher<[Movie], Error> {
+        return Future<[Movie], Error> { promise in
+            if fromScratch {
+                self.pageIndex = 1
+            } else {
+                guard self.hastNextPage else {
+                    promise(.failure(CustomError.rageOutOfIndex))
+                    return
                 }
-
-            case .failure(let error):
-                completion(.failure(error))
+                self.pageIndex += 1
             }
+            
+            self.service.makeRequest(request: .movies(type: movieType, page: self.pageIndex), type: Movies.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("fetchMoviesCO: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("fetchMoviesCO: finished")
+                }
+            }
+            receiveValue: { movies in
+                self.hastNextPage = movies.totalPages > self.pageIndex
+                promise(.success(movies.listOfmovies))
+            }.store(in: &self.cancellables)
         }
+        .eraseToAnyPublisher()
     }
     
-    func getDetail(with movieId: Int, completion: @escaping(Result<Movie, CustomError>) -> Void ) {
-        service.makeRequest(with: .movieDetail(movieId: movieId)) { result in
-            switch result {
-            case .success(let dataResult):
-                do {
-                    let decoder = JSONDecoder()
-                    let movie = try decoder.decode(Movie.self, from: dataResult)
-                    completion(.success(movie))
-                } catch {
-                    completion(.failure(.parsing))
+    func getDetailCO(with movieId: Int) ->  AnyPublisher<Movie, Error> {
+        return Future<Movie, Error> { promise in
+            self.service.makeRequest(request: .movieDetail(movieId: movieId), type: Movie.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("getDetailCO: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("getDetailCO: finished")
                 }
-
-            case .failure(let error):
-                completion(.failure(error))
             }
+            receiveValue: { movie in
+                promise(.success(movie))
+            }.store(in: &self.cancellables)
         }
+        .eraseToAnyPublisher()
     }
-
 }

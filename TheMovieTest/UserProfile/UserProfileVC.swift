@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class UserProfileVC: UIViewController {
     private lazy var userImageView: UIImageView = {
@@ -34,6 +36,7 @@ class UserProfileVC: UIViewController {
     }()
     
     private var viewModel: UserProfileVMProtocol = UserProfileVM()
+    private var bag = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,42 +69,55 @@ class UserProfileVC: UIViewController {
     }
     
     private func subscribe() {
-        viewModel.isLoading = handleisLoading()
-        viewModel.didFetchData = handleFetchedData()
-        viewModel.processError = handleError()
-    }
-    
-    private func handleisLoading() -> ((Bool) -> Void) {
-        return { [weak self] isLoading in
-            DispatchQueue.main.async {
+        viewModel.isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
                 if isLoading {
                     self?.loadingView.startAnimating()
                 } else {
                     self?.loadingView.stopAnimating()
                 }
             }
-        }
-    }
-    
-    private func handleFetchedData() -> (() -> Void) {
-        return { [weak self] in
-            DispatchQueue.main.async {
+            .store(in: &bag)
+
+        viewModel.didFetchData
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
                 if let currentUser = Session.shared.user {
                     let defaultImage = UIImage(systemName: "person")
                     self?.userImageView.setImage(with: currentUser.avatar.tmdb.avatarPath, and: defaultImage)
                     self?.userNameLabel.text = currentUser.username
                 }
-            }
-        }
-    }
-    
-    private func handleError() -> ((CustomError) -> Void) {
-        return { [weak self] processError in
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Error", message: processError.message, preferredStyle: UIAlertController.Style.alert)
+        }.store(in: &bag)
+
+        viewModel.processError
+            .receive(on: RunLoop.main)
+            .sink { [weak self] processError in
+                let alert = UIAlertController(title: "Error", message: processError.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
-            }
-        }
+        }.store(in: &bag)
     }
+}
+
+
+//You can use this class in UIKit
+class UserProfileSUIViewController: UIHostingController<UserProfileVCSUI> {
+    
+    required init() {
+        super.init(rootView: UserProfileVCSUI())
+    }
+    
+    //Use from Storyboard init
+    @objc required dynamic init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: UserProfileVCSUI())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //rootView.doSomething()
+        //print(rootView.text)
+    }
+    
 }

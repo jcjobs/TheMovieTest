@@ -14,12 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        
-        let mainVC = LoginVC()
-        let navigationController = UINavigationController(rootViewController: mainVC)
-        
+        //let mainVC = LoginVC()
+        let coordinator = Coordinator()
+        //let mainVC = LoginSUIViewController(coor: coor)
+        //let navigationController = UINavigationController(rootViewController: mainVC)
+        let navigationController = coordinator.navigationController
+ 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController =  navigationController //UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        coordinator.start()
         
         return true
     }

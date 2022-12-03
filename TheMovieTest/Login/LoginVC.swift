@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class LoginVC: UIViewController {
     private lazy var backgroundImageView: UIImageView = {
@@ -31,6 +33,8 @@ class LoginVC: UIViewController {
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.placeholder = "user"
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -58,6 +62,9 @@ class LoginVC: UIViewController {
     private var viewModel: LoginProtocol
     private var coordinator: CoordinatorProtocol?
     
+    private var cancellables: AnyCancellable?
+    private var bag = Set<AnyCancellable>()
+    
     init() {
         viewModel = LoginVM()
         super.init(nibName: nil, bundle: nil)
@@ -73,7 +80,7 @@ class LoginVC: UIViewController {
         setupView()
         subscribe()
     }
-    
+
     func setupView() {
         if let navigation = navigationController {
             coordinator = Coordinator(navigation)
@@ -117,27 +124,9 @@ class LoginVC: UIViewController {
     }
     
     private func subscribe() {
-        viewModel.isLoading = handleisLoading()
-        viewModel.loginSucced = handleLogin()
-        viewModel.processError = handleError()
-    }
-    
-    @objc
-    private func loginAction() {
-        let usermane = userNameTextfield.text ?? ""
-        let password = passwordTextField.text ?? ""
-        viewModel.makeLogin(with: usermane, and: password)
-        loadingView.startAnimating()
-    }
-    
-    @objc
-    func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    private func handleisLoading() -> ((Bool) -> Void) {
-        return { [weak self] isLoading in
-            DispatchQueue.main.async {
+        cancellables = viewModel.isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
                 self?.loginButton.isEnabled = !isLoading
                 
                 if isLoading {
@@ -146,24 +135,50 @@ class LoginVC: UIViewController {
                     self?.loadingView.stopAnimating()
                 }
             }
-        }
-    }
-    
-    private func handleLogin() -> ((Bool) -> Void) {
-        return { [weak self] loginSucced in
-            if loginSucced {
-                DispatchQueue.main.async {
-                    self?.coordinator?.showHomeView()
-                }
-            }
-        }
-    }
-    
-    private func handleError() -> ((CustomError) -> Void) {
-        return { [weak self] processError in
-            DispatchQueue.main.async {
+        
+         viewModel.loginSucced
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.coordinator?.showHomeView()
+        }.store(in: &bag)
+        
+        viewModel.processError
+            .receive(on: RunLoop.main)
+            .sink { [weak self] processError in
                 self?.coordinator?.presentErrror(with: processError)
-            }
-        }
+        }.store(in: &bag)
+    }
+    
+    @objc
+    private func loginAction() {
+        let usermane = "jcjobs"//userNameTextfield.text ?? ""
+        let password = "12345jc"//passwordTextField.text ?? ""
+        viewModel.makeLogin(with: usermane, and: password)
+        loadingView.startAnimating()
+    }
+    
+    @objc
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
+
+//You can use this class in UIKit
+class LoginSUIViewController: UIHostingController<LoginVCSUI> {
+    let coordinator: CoordinatorProtocol
+    
+    required init(coordinator: Coordinator) {
+        self.coordinator = coordinator
+        super.init(rootView: LoginVCSUI(coordinator: coordinator))
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+}
+
+

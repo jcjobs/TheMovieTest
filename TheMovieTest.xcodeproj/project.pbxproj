@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300CB731292F47AA00ECBAFF /* LoginVCSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300CB730292F47AA00ECBAFF /* LoginVCSUI.swift */; };
+		300CB7332931FEF400ECBAFF /* UserProfileVCSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300CB7322931FEF400ECBAFF /* UserProfileVCSUI.swift */; };
+		3044C3932939D60800C69BFD /* HomeVCSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044C3922939D60800C69BFD /* HomeVCSUI.swift */; };
+		3044C3962939FF9700C69BFD /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044C3952939FF9700C69BFD /* ActivityIndicator.swift */; };
+		3044C3982939FFEA00C69BFD /* BackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044C3972939FFE900C69BFD /* BackgroundImage.swift */; };
+		3044C39A293A001700C69BFD /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044C399293A001700C69BFD /* ErrorInfo.swift */; };
 		306F1EB528F3EF9300B9A7B3 /* CompanyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F1EB428F3EF9300B9A7B3 /* CompanyCollectionViewCell.swift */; };
 		306F1EB828F3F7D000B9A7B3 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F1EB728F3F7D000B9A7B3 /* UIFont.swift */; };
 		306F1EBA28F3FAA600B9A7B3 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F1EB928F3FAA600B9A7B3 /* UIImageView.swift */; };
@@ -50,6 +56,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300CB730292F47AA00ECBAFF /* LoginVCSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCSUI.swift; sourceTree = "<group>"; };
+		300CB7322931FEF400ECBAFF /* UserProfileVCSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVCSUI.swift; sourceTree = "<group>"; };
+		3044C3922939D60800C69BFD /* HomeVCSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCSUI.swift; sourceTree = "<group>"; };
+		3044C3952939FF9700C69BFD /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		3044C3972939FFE900C69BFD /* BackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImage.swift; sourceTree = "<group>"; };
+		3044C399293A001700C69BFD /* ErrorInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
 		306F1EB428F3EF9300B9A7B3 /* CompanyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCollectionViewCell.swift; sourceTree = "<group>"; };
 		306F1EB728F3F7D000B9A7B3 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		306F1EB928F3FAA600B9A7B3 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -125,6 +137,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3044C3942939FF8800C69BFD /* SwiftUIViews */ = {
+			isa = PBXGroup;
+			children = (
+				3044C3952939FF9700C69BFD /* ActivityIndicator.swift */,
+				3044C3972939FFE900C69BFD /* BackgroundImage.swift */,
+				3044C399293A001700C69BFD /* ErrorInfo.swift */,
+			);
+			path = SwiftUIViews;
+			sourceTree = "<group>";
+		};
 		306F1EB628F3F7C200B9A7B3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +199,7 @@
 				3095F0FD28F03EDE0027C2E3 /* DynamicScreenVC.swift */,
 				3095F0FF28F03F370027C2E3 /* DyamicScreenVM.swift */,
 				3095F10128F0473A0027C2E3 /* MovieCollectionViewCell.swift */,
+				3044C3922939D60800C69BFD /* HomeVCSUI.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -219,7 +242,9 @@
 		3095F0DA28EFFB4F0027C2E3 /* TheMovieTest */ = {
 			isa = PBXGroup;
 			children = (
+				3044C3942939FF8800C69BFD /* SwiftUIViews */,
 				306F1ED528F4301600B9A7B3 /* Enums */,
+				3095F0FC28F03D790027C2E3 /* Network */,
 				3095F0DB28EFFB4F0027C2E3 /* AppDelegate.swift */,
 				3095F0DD28EFFB4F0027C2E3 /* SceneDelegate.swift */,
 				3095F10328F04C7B0027C2E3 /* Coordinator.swift */,
@@ -231,7 +256,6 @@
 				306F1ED328F4282300B9A7B3 /* Home */,
 				3095F10E28F202960027C2E3 /* UserProfile */,
 				3095F10B28F1EDDF0027C2E3 /* Detail */,
-				3095F0FC28F03D790027C2E3 /* Network */,
 				3095F0FB28F03D3B0027C2E3 /* Login */,
 				3095F0E128EFFB4F0027C2E3 /* Main.storyboard */,
 				3095F0E428EFFB500027C2E3 /* Assets.xcassets */,
@@ -246,6 +270,7 @@
 			children = (
 				3095F0F128F00BEE0027C2E3 /* LoginVM.swift */,
 				3095F0EF28EFFE6E0027C2E3 /* LoginVC.swift */,
+				300CB730292F47AA00ECBAFF /* LoginVCSUI.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -274,6 +299,7 @@
 			children = (
 				3095F10F28F202B10027C2E3 /* UserProfileVC.swift */,
 				3095F11128F203B60027C2E3 /* UserProfileVM.swift */,
+				300CB7322931FEF400ECBAFF /* UserProfileVCSUI.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -401,11 +427,15 @@
 				3095F0DC28EFFB4F0027C2E3 /* AppDelegate.swift in Sources */,
 				3095F10D28F1EE1E0027C2E3 /* MovieDetailVM.swift in Sources */,
 				3095F10628F04EA60027C2E3 /* MoviesService.swift in Sources */,
+				3044C3982939FFEA00C69BFD /* BackgroundImage.swift in Sources */,
 				306F1EBE28F41F5600B9A7B3 /* UICollectionViewCell.swift in Sources */,
 				306F1ED228F4278C00B9A7B3 /* Collection.swift in Sources */,
 				306F1ECA28F4224200B9A7B3 /* LoginData.swift in Sources */,
+				300CB7332931FEF400ECBAFF /* UserProfileVCSUI.swift in Sources */,
 				306F1EDF28F4307E00B9A7B3 /* Company.swift in Sources */,
 				3095F10228F0473A0027C2E3 /* MovieCollectionViewCell.swift in Sources */,
+				3044C3932939D60800C69BFD /* HomeVCSUI.swift in Sources */,
+				3044C39A293A001700C69BFD /* ErrorInfo.swift in Sources */,
 				306F1ED928F4303800B9A7B3 /* ErrorData.swift in Sources */,
 				306F1EB828F3F7D000B9A7B3 /* UIFont.swift in Sources */,
 				306F1EDD28F4306400B9A7B3 /* Movie.swift in Sources */,
@@ -419,11 +449,13 @@
 				3095F0F028EFFE6E0027C2E3 /* LoginVC.swift in Sources */,
 				3095F0FA28F021E20027C2E3 /* LoginService.swift in Sources */,
 				3095F0DE28EFFB4F0027C2E3 /* SceneDelegate.swift in Sources */,
+				300CB731292F47AA00ECBAFF /* LoginVCSUI.swift in Sources */,
 				306F1EC828F4223000B9A7B3 /* SessionData.swift in Sources */,
 				306F1EBA28F3FAA600B9A7B3 /* UIImageView.swift in Sources */,
 				306F1EDB28F4305000B9A7B3 /* Movies.swift in Sources */,
 				306F1EC028F4212700B9A7B3 /* BaseProtocol.swift in Sources */,
 				3095F0F228F00BEE0027C2E3 /* LoginVM.swift in Sources */,
+				3044C3962939FF9700C69BFD /* ActivityIndicator.swift in Sources */,
 				3095F0F828F01FCE0027C2E3 /* Reachability.swift in Sources */,
 				306F1EBC28F41D9400B9A7B3 /* Date.swift in Sources */,
 				3095F11028F202B10027C2E3 /* UserProfileVC.swift in Sources */,

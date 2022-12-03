@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol DyamicScreenProtocol: BaseProtocol {
-    var didFetchData: (([Movie]?) -> Void)? { get set }
-    var processError: ((CustomError) -> ())? { get set }
-
+    var didFetchData: PassthroughSubject<[Movie]?, Never> { get }
+    var processError: PassthroughSubject<CustomError, Never> { get }
     
     init(with key: Constants.MovieType)
     func fetchMovies()
@@ -20,9 +20,10 @@ protocol DyamicScreenProtocol: BaseProtocol {
 class DyamicScreenVM: DyamicScreenProtocol {
     private let service = MoviesService()
     private var pageKey: Constants.MovieType
-    var isLoading: ((Bool) -> ())?
-    var didFetchData: (([Movie]?) -> Void)?
-    var processError: ((CustomError) -> ())?
+    var isLoading = CurrentValueSubject<Bool, Never>(false)
+    var didFetchData = PassthroughSubject<[Movie]?, Never>()
+    var processError = PassthroughSubject<CustomError, Never>()
+    private var cancellable: AnyCancellable?
 
     required init(with key: Constants.MovieType) {
         pageKey = key
@@ -37,16 +38,19 @@ class DyamicScreenVM: DyamicScreenProtocol {
     }
     
     private func getMovieList(fromScratch: Bool) {
-        isLoading?(true)
-        service.fetchMovies(with: pageKey, and: fromScratch) { [weak self] result in
-            self?.isLoading?(false)
-            switch result {
-            case .success(let movies):
-                self?.didFetchData?(movies)
-                
-            case .failure(let error):
-                self?.processError?(error)
+        isLoading.send(true)
+        cancellable = service.fetchMoviesCO(with: pageKey, and: fromScratch)
+            .sink { [weak self] completion in
+            switch completion {
+            case .failure(let err):
+                print("Error is \(err.localizedDescription)")
+                self?.processError.send(.badRequest)
+            case .finished:
+                print("Finished")
             }
+            self?.isLoading.send(false)
+        } receiveValue: { [weak self] movies in
+            self?.didFetchData.send(movies)
         }
     }
     

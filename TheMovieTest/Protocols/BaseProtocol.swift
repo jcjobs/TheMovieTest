@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol BaseProtocol {
-    var isLoading: ((Bool) -> ())? { get set }
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
+    //var isLoading: Published<Bool>.Publisher { get }
 }

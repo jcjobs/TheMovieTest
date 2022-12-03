@@ -6,31 +6,36 @@
 //
 
 import Foundation
+import Combine
 
 protocol LoginProtocol: BaseProtocol {
-    var loginSucced: ((Bool) -> ())? { get set }
-    var processError: ((CustomError) -> ())? { get set }
+    var loginSucced: PassthroughSubject<Void, Never> { get }
+    var processError: PassthroughSubject<CustomError, Never> { get }
 
     func makeLogin(with user: String, and password: String)
 }
 
 class LoginVM: LoginProtocol {
-    var isLoading: ((Bool) -> ())?
-    var loginSucced: ((Bool) -> ())?
-    var processError: ((CustomError) -> ())?
+    var loginSucced = PassthroughSubject<Void, Never>()
+    var processError = PassthroughSubject<CustomError, Never>()
+    var isLoading = CurrentValueSubject<Bool, Never>(false)
     private var service = LoginService()
+    private var cancellable: AnyCancellable?
     
     func makeLogin(with user: String, and password: String) {
-        isLoading?(true)
-        service.makeLogin(with: user, password: password) { [weak self] result in
-            self?.isLoading?(false)
-            switch result {
-            case .success(let succed):
-                self?.loginSucced?(succed)
-                
-            case .failure(let error):
-                self?.processError?(error)
+        isLoading.send(true)
+        cancellable = service.makeLoginCO(with: user, and: password)
+            .sink { [weak self] completion in
+            switch completion {
+            case .failure(let err):
+                print("Error is \(err.localizedDescription)")
+                self?.processError.send(.badRequest)
+            case .finished:
+                print("Finished")
             }
+            self?.isLoading.send(false)
+        } receiveValue: { [weak self] _ in
+            self?.loginSucced.send(())
         }
     }
 }

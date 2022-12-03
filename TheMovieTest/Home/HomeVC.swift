@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class HomeVC: UIPageViewController {
     private lazy var segmentControl: UISegmentedControl = {
@@ -43,7 +44,7 @@ class HomeVC: UIPageViewController {
         moveTo(newIndex: 0)
     }
 
-    func setupView() {
+    private func setupView() {
         if let navigation = navigationController {
             coordinator = Coordinator(navigation)
         }
@@ -132,3 +133,17 @@ extension HomeVC: UIPageViewControllerDataSource {
 }
 
 extension HomeVC: UIPageViewControllerDelegate { }
+
+
+struct HomeVCRepresentable : UIViewControllerRepresentable {
+    typealias UIViewControllerType = HomeVC
+    
+    func makeUIViewController(context: Context) -> HomeVC {
+        return HomeVC()
+    }
+
+    func updateUIViewController(_ uiViewController: HomeVC, context: Context) {
+        
+    }
+}
+

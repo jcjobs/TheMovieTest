@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import SwiftUI
 
 class MovieDetailVC: UIViewController {
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -105,6 +107,7 @@ class MovieDetailVC: UIViewController {
     
     private var viewModel: MovieDetailVMProtocol
     private var currentMovie: Movie
+    private var bag = Set<AnyCancellable>()
     
     init(with movie: Movie) {
         currentMovie = movie
@@ -185,44 +188,34 @@ class MovieDetailVC: UIViewController {
     }
     
     private func subscribe() {
-        viewModel.isLoading = handleisLoading()
-        viewModel.didFetchData = handleFetchedData()
-        viewModel.processError = handleError()
-    }
-    
-    private func handleisLoading() -> ((Bool) -> Void) {
-        return { [weak self] isLoading in
-            DispatchQueue.main.async {
+        viewModel.isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
                 if isLoading {
                     self?.loadingView.startAnimating()
                 } else {
                     self?.loadingView.stopAnimating()
                 }
             }
-        }
-    }
-    
-    private func handleFetchedData() -> ((Movie) -> Void) {
-        return { [weak self] dataResult in
-            self?.currentMovie = dataResult
-
-            DispatchQueue.main.async {
+            .store(in: &bag)
+        
+        viewModel.didFetchData
+            .receive(on: RunLoop.main)
+            .sink { [weak self] dataResult in
+                self?.currentMovie = dataResult
                 self?.showMovieDetail()
                 self?.collectionView.reloadData()
-            }
-        }
-    }
-    
-    private func handleError() -> ((CustomError) -> Void) {
-        return { [weak self] processError in
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Error", message: processError.message, preferredStyle: UIAlertController.Style.alert)
+            }.store(in: &bag)
+        
+        viewModel.processError
+            .receive(on: RunLoop.main)
+            .sink { [weak self] processError in
+                let alert = UIAlertController(title: "Error", message: processError.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
-            }
-        }
+            }.store(in: &bag)
     }
-    
+
     private func showMovieDetail() {
         movieNameLabel.text = currentMovie.title
         let releaseDate = Date(dateString: currentMovie.releaseDate ?? "")
@@ -264,11 +257,23 @@ extension MovieDetailVC: UICollectionViewDataSource {
 }
 
 extension MovieDetailVC: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 30)/2
         return CGSize(width: width, height: 150)
     }
-     
 }
 
+
+
+struct MovieDetailVCRepresentable : UIViewControllerRepresentable {
+    typealias UIViewControllerType = MovieDetailVC
+    let movie: Movie
+    
+    func makeUIViewController(context: Context) -> MovieDetailVC {
+        return MovieDetailVC(with: movie)
+    }
+    
+    func updateUIViewController(_ uiViewController: MovieDetailVC, context: Context) {
+        
+    }
+}

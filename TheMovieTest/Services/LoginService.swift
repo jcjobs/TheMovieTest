@@ -6,106 +6,136 @@
 //
 
 import Foundation
+import Combine
 
 class LoginService {
     private let service: ServiceProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         service = ServiceConnector()
     }
-
-    func makeLogin(with username: String, password: String, completion: @escaping(Result<Bool, CustomError>) -> Void ) {
-        requestToken { [weak self] result in
-            switch result {
-            case .success(_):
-                self?.completeLogin(with: username, password: password, completion: completion)
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
     
-    private func completeLogin(with username: String, password: String, completion: @escaping(Result<Bool, CustomError>) -> Void ) {
-        service.makeRequest(with: .login(username: username, pass: password)) { [weak self] result in
-            switch result {
-            case .success(let loginResult):
-                do {
-                    let decoder = JSONDecoder()
-                    let loginData = try decoder.decode(LoginData.self, from: loginResult)
-                    if loginData.success {
-                        self?.createSession(completion: completion)
-                    } else {
-                        completion(.failure(.loginFailed(message: "Bad request")))
+    func makeLoginCO(with username: String, and password: String) -> AnyPublisher<Void, Error> {
+        return Future<Void, Error> { promise in
+            self.requestTokenCO()
+                .flatMap { _ in self.loginRequest(with: username, and: password) }
+                .flatMap { _ in self.createSesionCO() }
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let err):
+                        debugPrint("makeLogin Error is \(err.localizedDescription)")
+                        promise(.failure(err))
+                    case .finished:
+                        debugPrint("makeLogin Finished")
                     }
-    
-                } catch {
-                    completion(.failure(.parsing))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
+                },receiveValue: { _ in
+                    promise(.success(()))
+                })
+                .store(in: &self.cancellables)
         }
+        .eraseToAnyPublisher()
     }
     
-    private func requestToken(completion: @escaping(Result<Bool, CustomError>) -> Void ) {
-        service.makeRequest(with: .requestToken) { result in
-            switch result {
-            case .success(let tokenResponse):
-                do {
-                    let decoder = JSONDecoder()
-                    let loginData = try decoder.decode(LoginData.self, from: tokenResponse)
-                    Session.shared.requestToken = loginData.requestToken
-                    completion(.success(true))
-                    
-                } catch {
-                    completion(.failure(.parsing))
+    private func requestTokenCO2() -> AnyCancellable {
+        return self.service.makeRequest(request: .requestToken, type: LoginData.self)
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("Error is \(err.localizedDescription)")
+                case .finished:
+                    debugPrint("Finished")
                 }
-
-            case .failure(let error):
-                completion(.failure(error))
             }
-        }
-    }
-
-    private func createSession(completion: @escaping(Result<Bool, CustomError>) -> Void ) {
-        service.makeRequest(with: .sesion) { result in
-            switch result {
-            case .success(let tokenResponse):
-                do {
-                    let decoder = JSONDecoder()
-                    let loginData = try decoder.decode(SessionData.self, from: tokenResponse)
-                    Session.shared.sessionId = loginData.sessionId
-                    completion(.success(loginData.success))
-                    
-                } catch {
-                    completion(.failure(.parsing))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
+            receiveValue: { loginData in
+                Session.shared.requestToken = loginData.requestToken
             }
-        }
     }
     
-    func getUserProfile(completion: @escaping(Result<Bool, CustomError>) -> Void ) {
-        service.makeRequest(with: .profile) { result in
-            switch result {
-            case .success(let profileResult):
-                do {
-                    let decoder = JSONDecoder()
-                    let userData = try decoder.decode(UserData.self, from: profileResult)
-                    Session.shared.user = userData
-                    completion(.success(true))
-                    
-                } catch {
-                    completion(.failure(CustomError.parsing))
+    //1.-
+    private func requestTokenCO() -> AnyPublisher<Bool, Error>{
+        debugPrint("requestTokenCO...")
+        return Future<Bool, Error> { promise in
+            self.service.makeRequest(request: .requestToken, type: LoginData.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("requestTokenCO: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("requestTokenCO: finished")
                 }
-
-            case .failure(let error):
-                completion(.failure(error))
             }
+            receiveValue: { loginData in
+                Session.shared.requestToken = loginData.requestToken
+                promise(.success(true))
+            }.store(in: &self.cancellables)
         }
+        .eraseToAnyPublisher()
+    }
+    
+    //2.-
+    private func loginRequest(with username: String, and password: String) -> AnyPublisher<Bool, Error> {
+        debugPrint("loginRequest...")
+        return Future<Bool, Error> { promise in
+            self.service.makeRequest(request: .login(username: username, pass: password), type: LoginData.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("loginRequest: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("loginRequest: Finished")
+                }
+            }
+            receiveValue: { loginData in
+                promise(.success(true))
+            }.store(in: &self.cancellables)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    //3.-
+    //func createSesionCO() -> Future<Bool, Error> {
+    private func createSesionCO() -> AnyPublisher<Bool, Error> {
+        debugPrint("createSesionCO...")
+        return Future<Bool, Error> { promise in
+            self.service.makeRequest(request: .sesion, type: SessionData.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("createSesionCO: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("createSesionCO: Finished")
+                }
+            }
+            receiveValue: { loginData in
+                Session.shared.sessionId = loginData.sessionId
+                promise(.success(true))
+            }.store(in: &self.cancellables)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    private func getUserProfileCO() -> AnyPublisher<Void, Error> {
+        debugPrint("getUserProfileCO...")
+        return Future<Void, Error> { promise in
+            self.service.makeRequest(request: .profile, type: UserData.self)
+                .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    debugPrint("getUserProfileCO: Error is \(err.localizedDescription)")
+                    promise(.failure(err))
+                case .finished:
+                    debugPrint("getUserProfileCO: Finished")
+                }
+            }
+            receiveValue: { userData in
+                Session.shared.user = userData
+                promise(.success(()))
+            }.store(in: &self.cancellables)
+        }
+        .eraseToAnyPublisher()
     }
 }
