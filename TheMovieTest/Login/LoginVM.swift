@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreComponents
 
 protocol LoginProtocol: BaseProtocol {
     var loginSucced: PassthroughSubject<Void, Never> { get }
@@ -27,13 +28,15 @@ class LoginVM: LoginProtocol {
         cancellable = service.makeLoginCO(with: user, and: password)
             .sink { [weak self] completion in
             switch completion {
-            case .failure(let err):
-                print("Error is \(err.localizedDescription)")
-                self?.processError.send(.badRequest)
+            case .failure(let error):
+                debugPrint("Error is \(error.localizedDescription)")
+                self?.processError.send(error)
+                
             case .finished:
-                print("Finished")
+                debugPrint("makeLogin finished...")
             }
             self?.isLoading.send(false)
+                
         } receiveValue: { [weak self] _ in
             self?.loginSucced.send(())
         }

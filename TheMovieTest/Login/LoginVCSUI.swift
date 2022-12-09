@@ -11,26 +11,14 @@ import Combine
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
 
 struct LoginVCSUI: View {
-    var coordinator: CoordinatorProtocol
-   
     private var viewModel: LoginProtocol = LoginVM()
-    
-    @State private var isLoading = true
-    
-    
-    //@State private var presentAlert = false
+    private var coordinator: CoordinatorProtocol
 
-    
-    @State private var error: ErrorInfo?
-    
-    
+    @State private var isLoading = true
+    @State private var username: String = ""
+    @State private var password: String = ""
     @State private var successLogin = false
-    
-    
-    
-    @State private var username: String = "jcjobs"
-    @State private var password: String = "12345jc"
-    
+    @State private var error: ErrorInfo?
     
     init(coordinator: CoordinatorProtocol) {
         self.coordinator = coordinator
@@ -39,11 +27,6 @@ struct LoginVCSUI: View {
     var body: some View {
         let navigation = NavigationView {
             ZStack {
-                //show your view controller
-                /*NavigationLink(destination: HomeVCRepresentable(), isActive: $successLogin) {
-                    EmptyView()
-                }*/
-                
                 BackgroundImage()
                 
                 VStack {
@@ -110,7 +93,6 @@ struct LoginVCSUI: View {
                 coordinator.showHomeView()
             }
             .onReceive(viewModel.processError.receive(on: RunLoop.main)) { outPut in
-                //presentAlert = true
                 error = ErrorInfo(id: 3, title: "Error", description: outPut.localizedDescription)
             }
     }

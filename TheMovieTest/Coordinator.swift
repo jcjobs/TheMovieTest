@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreComponents
 
 protocol CoordinatorProtocol {
     var navigationController: UINavigationController { get set }
@@ -51,14 +52,14 @@ final class Coordinator: CoordinatorProtocol {
     func showUserProfile() {
         navigationController.navigationBar.topItem?.title = ""
         //let viewController = UserProfileVC() //UIKit
-        let viewController = UserProfileSUIViewController() //SwiftUI
+        let viewModel: UserProfileVMProtocol = UserProfileVM()
+        let viewController = UserProfileSUIViewController(with: viewModel) //SwiftUI
         navigationController.pushViewController(viewController, animated: true)
     }
     
     func logOut() {
-        Session.shared.requestToken = ""
-        Session.shared.sessionId = ""
-        Session.shared.user = nil
+        CoreSession.shared.clearSesssion()
+        Session.shared.clearSession()
         navigationController.popToRootViewController(animated: true)
     }
 }

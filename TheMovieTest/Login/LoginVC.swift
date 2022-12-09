@@ -151,8 +151,8 @@ class LoginVC: UIViewController {
     
     @objc
     private func loginAction() {
-        let usermane = "jcjobs"//userNameTextfield.text ?? ""
-        let password = "12345jc"//passwordTextField.text ?? ""
+        let usermane = userNameTextfield.text ?? ""
+        let password = passwordTextField.text ?? ""
         viewModel.makeLogin(with: usermane, and: password)
         loadingView.startAnimating()
     }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreComponents
 
 protocol MovieDetailVMProtocol: BaseProtocol {
     var didFetchData: PassthroughSubject<Movie, Never> { get }
@@ -27,9 +28,9 @@ class MovieDetailVM: MovieDetailVMProtocol {
         cancellable = service.getDetailCO(with: movieId)
             .sink { [weak self] completion in
             switch completion {
-            case .failure(let err):
-                print("Error is \(err.localizedDescription)")
-                self?.processError.send(.badRequest)
+            case .failure(let error):
+                print("Error is \(error.localizedDescription)")
+                self?.processError.send(error)
             case .finished:
                 print("Finished")
             }

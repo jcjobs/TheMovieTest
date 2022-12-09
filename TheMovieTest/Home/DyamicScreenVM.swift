@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreComponents
 
 protocol DyamicScreenProtocol: BaseProtocol {
     var didFetchData: PassthroughSubject<[Movie]?, Never> { get }

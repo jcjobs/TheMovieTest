@@ -8,9 +8,10 @@
 import SwiftUI
 import Kingfisher
 import Combine
+import CoreComponents
 
 struct UserProfileVCSUI: View {
-    private var viewModel: UserProfileVMProtocol = UserProfileVM()
+    private var viewModel: UserProfileVMProtocol
     
     @State private var isLoading = true
     @State private var error: ErrorInfo?
@@ -19,6 +20,10 @@ struct UserProfileVCSUI: View {
     @State private var userFullName: String = ""
     
     @ObservedObject var imageLoader = ImageLoaderService()
+    
+    init(with viewModel: UserProfileVMProtocol) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         let navigation =
@@ -79,7 +84,7 @@ struct UserProfileVCSUI: View {
                 if let currentUser = Session.shared.user {
                     userFullName = currentUser.name
                     
-                    let imageUrlString = Constants.image + currentUser.avatar.tmdb.avatarPath
+                    let imageUrlString = CoreConstants.image + currentUser.avatar.tmdb.avatarPath
                     
                     if #available(iOS 14.0, *) {
                         urlImage = URL(string: imageUrlString)
@@ -93,33 +98,24 @@ struct UserProfileVCSUI: View {
 
 struct UserProfileVCSUI_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileVCSUI()
+        let viewModel: UserProfileVMProtocol = UserProfileVM()
+        UserProfileVCSUI(with: viewModel)
     }
 }
 
-@available(iOS 13, *)
 class ImageLoaderService: ObservableObject {
     @Published var image: UIImage = UIImage(systemName: "person") ?? UIImage()
     private var cancellable: AnyCancellable?
     
     func loadImage(for urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        
-        /*let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data) ?? UIImage()
-            }
-        }
-        task.resume()*/
-        
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
-              .map { UIImage(data: $0.data) }
-              .replaceError(with: nil)
-              .receive(on: RunLoop.main)
-              .sink { value in
-                  self.image = value ?? UIImage()
-              }
+            .map { UIImage(data: $0.data) }
+            .replaceError(with: nil)
+            .receive(on: RunLoop.main)
+            .sink { value in
+                self.image = value ?? UIImage()
+            }
     }
     
 }

@@ -103,21 +103,15 @@ class UserProfileVC: UIViewController {
 
 //You can use this class in UIKit
 class UserProfileSUIViewController: UIHostingController<UserProfileVCSUI> {
+    let viewModel: UserProfileVMProtocol
     
-    required init() {
-        super.init(rootView: UserProfileVCSUI())
+    required init(with viewModel: UserProfileVMProtocol) {
+        self.viewModel = viewModel
+        super.init(rootView: UserProfileVCSUI(with: viewModel))
     }
     
     //Use from Storyboard init
     @objc required dynamic init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: UserProfileVCSUI())
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //rootView.doSomething()
-        //print(rootView.text)
-    }
-    
 }

@@ -7,10 +7,11 @@
 
 import UIKit
 import Kingfisher
+import CoreComponents
 
 extension UIImageView {
     func setImage(with imageUrlString: String, and defaultImage: UIImage?, and color: UIColor? = nil) {
-        guard let imageUrl = URL(string: Constants.image + imageUrlString) else {
+        guard let imageUrl = URL(string: CoreConstants.image + imageUrlString) else {
             image = defaultImage
             return
         }

@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import CoreComponents
 
 class HomeVC: UIPageViewController {
     private lazy var segmentControl: UISegmentedControl = {

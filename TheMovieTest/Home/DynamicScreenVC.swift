@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import CoreComponents
 
 class DynamicScreenVC: UIViewController {
     private lazy var loadingView: UIActivityIndicatorView = {

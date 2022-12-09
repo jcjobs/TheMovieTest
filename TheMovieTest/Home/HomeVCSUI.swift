@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreComponents
 
 struct HomeVCSUI: View {
     @State private var indexPath = 0

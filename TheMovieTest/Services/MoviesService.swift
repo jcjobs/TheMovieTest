@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreComponents
 
 class MoviesService {
     private let service: ServiceProtocol
@@ -18,8 +19,8 @@ class MoviesService {
         service = ServiceConnector()
     }
 
-    func fetchMoviesCO(with movieType: Constants.MovieType, and fromScratch: Bool) -> AnyPublisher<[Movie], Error> {
-        return Future<[Movie], Error> { promise in
+    func fetchMoviesCO(with movieType: Constants.MovieType, and fromScratch: Bool) -> AnyPublisher<[Movie], CustomError> {
+        return Future<[Movie], CustomError> { promise in
             if fromScratch {
                 self.pageIndex = 1
             } else {
@@ -30,12 +31,12 @@ class MoviesService {
                 self.pageIndex += 1
             }
             
-            self.service.makeRequest(request: .movies(type: movieType, page: self.pageIndex), type: Movies.self)
+            self.service.makeRequest(request: .movies(type: movieType.rawValue, page: self.pageIndex), type: Movies.self)
                 .sink { completion in
                 switch completion {
-                case .failure(let err):
-                    debugPrint("fetchMoviesCO: Error is \(err.localizedDescription)")
-                    promise(.failure(err))
+                case .failure(let error):
+                    debugPrint("fetchMoviesCO: Error is \(error.localizedDescription)")
+                    promise(.failure(error))
                 case .finished:
                     debugPrint("fetchMoviesCO: finished")
                 }
@@ -48,14 +49,14 @@ class MoviesService {
         .eraseToAnyPublisher()
     }
     
-    func getDetailCO(with movieId: Int) ->  AnyPublisher<Movie, Error> {
-        return Future<Movie, Error> { promise in
+    func getDetailCO(with movieId: Int) ->  AnyPublisher<Movie, CustomError> {
+        return Future<Movie, CustomError> { promise in
             self.service.makeRequest(request: .movieDetail(movieId: movieId), type: Movie.self)
                 .sink { completion in
                 switch completion {
-                case .failure(let err):
-                    debugPrint("getDetailCO: Error is \(err.localizedDescription)")
-                    promise(.failure(err))
+                case .failure(let error):
+                    debugPrint("getDetailCO: Error is \(error.localizedDescription)")
+                    promise(.failure(error))
                 case .finished:
                     debugPrint("getDetailCO: finished")
                 }
