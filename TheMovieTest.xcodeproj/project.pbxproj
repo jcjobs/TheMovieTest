@@ -48,7 +48,7 @@
 		3095F10D28F1EE1E0027C2E3 /* MovieDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3095F10C28F1EE1E0027C2E3 /* MovieDetailVM.swift */; };
 		3095F11028F202B10027C2E3 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3095F10F28F202B10027C2E3 /* UserProfileVC.swift */; };
 		3095F11228F203B60027C2E3 /* UserProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3095F11128F203B60027C2E3 /* UserProfileVM.swift */; };
-		5E5D3F342941D26800019A87 /* CoreComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 5E5D3F332941D26800019A87 /* CoreComponents */; };
+		5E42D6BD29485EF100AF20F8 /* CoreComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 5E42D6BC29485EF100AF20F8 /* CoreComponents */; };
 		5E5D3F362941D7C300019A87 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D3F352941D7C300019A87 /* Constants.swift */; };
 		E5261540121EC86A56AD5423 /* Pods_TheMovieTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F68D1426F00B767C2596B5FE /* Pods_TheMovieTest.framework */; };
 /* End PBXBuildFile section */
@@ -98,7 +98,7 @@
 		3095F10F28F202B10027C2E3 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		3095F11128F203B60027C2E3 /* UserProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVM.swift; sourceTree = "<group>"; };
 		4F9531B5C01A43E0591B8C43 /* Pods-TheMovieTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieTest.release.xcconfig"; path = "Target Support Files/Pods-TheMovieTest/Pods-TheMovieTest.release.xcconfig"; sourceTree = "<group>"; };
-		5E5D3F322941D23400019A87 /* CoreComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreComponents; path = "../client-apps-apple/CoreComponents"; sourceTree = "<group>"; };
+		5E42D6BB29485ECF00AF20F8 /* CoreComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreComponents; path = TheMovieTest/CoreComponents; sourceTree = "<group>"; };
 		5E5D3F352941D7C300019A87 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E6BFFC119427DCA91C9F33AD /* Pods-TheMovieTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieTest.debug.xcconfig"; path = "Target Support Files/Pods-TheMovieTest/Pods-TheMovieTest.debug.xcconfig"; sourceTree = "<group>"; };
 		F68D1426F00B767C2596B5FE /* Pods_TheMovieTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheMovieTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,7 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5261540121EC86A56AD5423 /* Pods_TheMovieTest.framework in Frameworks */,
-				5E5D3F342941D26800019A87 /* CoreComponents in Frameworks */,
+				5E42D6BD29485EF100AF20F8 /* CoreComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,13 +172,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		306F1ECB28F4227000B9A7B3 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
 		306F1ED028F4274D00B9A7B3 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +213,7 @@
 		3095F0CF28EFFB4F0027C2E3 = {
 			isa = PBXGroup;
 			children = (
-				5E5D3F322941D23400019A87 /* CoreComponents */,
+				5E42D6BB29485ECF00AF20F8 /* CoreComponents */,
 				3095F0DA28EFFB4F0027C2E3 /* TheMovieTest */,
 				3095F0D928EFFB4F0027C2E3 /* Products */,
 				1A4F29B0D48AC1575BC9C877 /* Pods */,
@@ -239,15 +232,14 @@
 		3095F0DA28EFFB4F0027C2E3 /* TheMovieTest */ = {
 			isa = PBXGroup;
 			children = (
-				3044C3942939FF8800C69BFD /* SwiftUIViews */,
-				306F1ED528F4301600B9A7B3 /* Enums */,
 				3095F0DB28EFFB4F0027C2E3 /* AppDelegate.swift */,
 				3095F0DD28EFFB4F0027C2E3 /* SceneDelegate.swift */,
 				3095F10328F04C7B0027C2E3 /* Coordinator.swift */,
+				3044C3942939FF8800C69BFD /* SwiftUIViews */,
+				306F1ED528F4301600B9A7B3 /* Enums */,
 				306F1ED428F4293000B9A7B3 /* Services */,
 				306F1EB628F3F7C200B9A7B3 /* Extensions */,
 				306F1EC128F421B900B9A7B3 /* Models */,
-				306F1ECB28F4227000B9A7B3 /* Enums */,
 				306F1ED028F4274D00B9A7B3 /* Protocols */,
 				306F1ED328F4282300B9A7B3 /* Home */,
 				3095F10E28F202960027C2E3 /* UserProfile */,
@@ -310,7 +302,7 @@
 			);
 			name = TheMovieTest;
 			packageProductDependencies = (
-				5E5D3F332941D26800019A87 /* CoreComponents */,
+				5E42D6BC29485EF100AF20F8 /* CoreComponents */,
 			);
 			productName = TheMovieTest;
 			productReference = 3095F0D828EFFB4F0027C2E3 /* TheMovieTest.app */;
@@ -671,7 +663,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5E5D3F332941D26800019A87 /* CoreComponents */ = {
+		5E42D6BC29485EF100AF20F8 /* CoreComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreComponents;
 		};

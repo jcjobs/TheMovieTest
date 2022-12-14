@@ -9,8 +9,6 @@ import Foundation
 
 final class Session {
     static let shared = Session()
-    //var requestToken: String = ""
-    //var sessionId: String = ""
     var user: UserData? = nil
     
     func clearSession() {

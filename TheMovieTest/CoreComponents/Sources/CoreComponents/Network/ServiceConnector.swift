@@ -8,18 +8,20 @@
 import Foundation
 import Combine
 
-protocol ServiceProtocol {
-    func makeRequest<T: Decodable>(request: Constants.Request, type: T.Type) -> AnyPublisher<T, Error>
+public protocol ServiceProtocol {
+    func makeRequest<T: Decodable>(request: CoreConstants.Request, type: T.Type) -> AnyPublisher<T, CustomError>
 }
 
-class ServiceConnector: ServiceProtocol {
+public class ServiceConnector: ServiceProtocol {
     private var cancellable: AnyCancellable?
     private var isConnectedToNetwork: Bool {
         Reachability.isConnectedToNetwork()
     }
     
-    func makeRequest<T: Decodable>(request: Constants.Request, type: T.Type) -> AnyPublisher<T, Error> {
-        return Future<T, Error> { [weak self] promise in
+    public init(){ }
+    
+    public func makeRequest<T: Decodable>(request: CoreConstants.Request, type: T.Type) -> AnyPublisher<T, CustomError> {
+        return Future<T, CustomError> { [weak self] promise in
             guard let self, let finalRequest = URL(string: request.urlString) else {
                 return promise(.failure(CustomError.invalidURL))
             }
@@ -45,7 +47,7 @@ class ServiceConnector: ServiceProtocol {
             self.cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
                 .tryMap { (data, response) -> Data in
                     guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-                        throw CustomError.responseError
+                        throw CustomError.responseError(message: "")
                     }
                     return data
                 }
@@ -54,7 +56,8 @@ class ServiceConnector: ServiceProtocol {
                     if case let .failure(error) = completion {
                         switch error {
                         case let decodingError as DecodingError:
-                            promise(.failure(decodingError))
+                            debugPrint(decodingError)
+                            promise(.failure(.parsing))
                         case let apiError as CustomError:
                             promise(.failure(apiError))
                         default:

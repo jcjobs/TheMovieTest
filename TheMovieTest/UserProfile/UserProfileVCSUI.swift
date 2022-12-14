@@ -84,7 +84,7 @@ struct UserProfileVCSUI: View {
                 if let currentUser = Session.shared.user {
                     userFullName = currentUser.name
                     
-                    let imageUrlString = CoreConstants.image + currentUser.avatar.tmdb.avatarPath
+                    let imageUrlString = CoreConstants.imageUrl + currentUser.avatar.tmdb.avatarPath
                     
                     if #available(iOS 14.0, *) {
                         urlImage = URL(string: imageUrlString)
@@ -117,7 +117,4 @@ class ImageLoaderService: ObservableObject {
                 self.image = value ?? UIImage()
             }
     }
-    
 }
-
-

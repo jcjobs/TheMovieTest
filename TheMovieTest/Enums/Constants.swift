@@ -14,7 +14,7 @@ struct Constants {
         case topRated = "top_rated"
         case nowPlaying = "now_playing"
        
-        public var title: String {
+        var title: String {
             switch self {
             case .topRated:
                 return "Top rated"

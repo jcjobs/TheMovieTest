@@ -58,7 +58,7 @@ final class Coordinator: CoordinatorProtocol {
     }
     
     func logOut() {
-        CoreSession.shared.clearSesssion()
+        CoreSession.shared.clearSession()
         Session.shared.clearSession()
         navigationController.popToRootViewController(animated: true)
     }

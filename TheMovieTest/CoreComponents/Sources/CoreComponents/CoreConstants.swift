@@ -7,40 +7,17 @@
 
 import Foundation
 
-struct Constants {
-    static let baseUrl = "https://api.themoviedb.org/3/"
-    static let apiKey = "?api_key=6b8faabbb534b18b7280fc10901cb18c"
-    static let image = "https://image.tmdb.org/t/p/w200"
-    
-    enum MovieType: String, CaseIterable {
-        case popular
-        case upcoming
-        case topRated = "top_rated"
-        case nowPlaying = "now_playing"
-       
-        var title: String {
-            switch self {
-            case .topRated:
-                return "Top rated"
-                
-            case .popular:
-                return "Popular"
-                
-            case .nowPlaying:
-                return "Now Playing"
-                
-            case .upcoming:
-                return "Upcoming"
-            }
-        }
-    }
+public struct CoreConstants {
+    public static let baseUrl = "https://api.themoviedb.org/3/"
+    public static let apiKey = "?api_key=6b8faabbb534b18b7280fc10901cb18c"
+    public static let imageUrl = "https://image.tmdb.org/t/p/w200"
 
-    enum Request {
+    public enum Request {
         case requestToken
         case login(username: String, pass: String)
         case sesion
         case profile
-        case movies(type: MovieType, page: Int)
+        case movies(type: String, page: Int)
         case movieDetail(movieId: Int)
 
         var urlString: String {
@@ -55,13 +32,13 @@ struct Constants {
                 return baseUrl + "authentication/session/new" + apiKey
                 
             case .profile:
-                return baseUrl + "account" + apiKey + "&session_id=\(Session.shared.sessionId)"
+                return baseUrl + "account" + apiKey + "&session_id=\(CoreSession.shared.sessionId)"
                 
             case .movieDetail(let movieId):
                 return baseUrl + "movie/\(movieId)" + apiKey
                 
             case .movies(let type, let page):
-                return baseUrl + "movie/\(type.rawValue)" + apiKey + "&page=\(page)"
+                return baseUrl + "movie/\(type)" + apiKey + "&page=\(page)"
                 
             }
         }
@@ -79,10 +56,10 @@ struct Constants {
         var params: [String: Any] {
             switch self {
             case .login(let userName, let password):
-                return ["username": userName, "password": password, "request_token": Session.shared.requestToken]
+                return ["username": userName, "password": password, "request_token": CoreSession.shared.requestToken]
                 
             case .sesion:
-                return ["request_token": Session.shared.requestToken]
+                return ["request_token": CoreSession.shared.requestToken]
                 
             default:
                 return [:]
