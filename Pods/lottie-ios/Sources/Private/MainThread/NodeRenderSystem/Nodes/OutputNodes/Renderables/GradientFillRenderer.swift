@@ -5,14 +5,13 @@
 //  Created by Brandon Withrow on 1/30/19.
 //
 
-import Foundation
 import QuartzCore
 
 // MARK: - GradientFillLayer
 
 private final class GradientFillLayer: CALayer {
 
-  var start: CGPoint = .zero {
+  var start = CGPoint.zero {
     didSet {
       setNeedsDisplay()
     }
@@ -30,13 +29,13 @@ private final class GradientFillLayer: CALayer {
     }
   }
 
-  var end: CGPoint = .zero {
+  var end = CGPoint.zero {
     didSet {
       setNeedsDisplay()
     }
   }
 
-  var type: GradientType = .none {
+  var type = GradientType.none {
     didSet {
       setNeedsDisplay()
     }
@@ -48,15 +47,11 @@ private final class GradientFillLayer: CALayer {
 
     var gradientColors = [CGColor]()
     var colorLocations = [CGFloat]()
-    let colorSpace = CGColorSpaceCreateDeviceRGB()
     let maskColorSpace = CGColorSpaceCreateDeviceGray()
     for i in 0..<numberOfColors {
       let ix = i * 4
-      if
-        colors.count > ix, let color = CGColor(
-          colorSpace: colorSpace,
-          components: [colors[ix + 1], colors[ix + 2], colors[ix + 3], 1])
-      {
+      if colors.count > ix {
+        let color = CGColor.rgb(colors[ix + 1], colors[ix + 2], colors[ix + 3])
         gradientColors.append(color)
         colorLocations.append(colors[ix])
       }
@@ -68,10 +63,8 @@ private final class GradientFillLayer: CALayer {
       if alpha < 1 {
         drawMask = true
       }
-      if let color = CGColor(colorSpace: maskColorSpace, components: [alpha, 1]) {
-        alphaLocations.append(colors[i])
-        alphaColors.append(color)
-      }
+      alphaLocations.append(colors[i])
+      alphaColors.append(.gray(alpha))
     }
 
     /// First draw a mask is necessary.
@@ -88,7 +81,8 @@ private final class GradientFillLayer: CALayer {
           bitsPerComponent: 8,
           bytesPerRow: ctx.width,
           space: maskColorSpace,
-          bitmapInfo: 0) else { return }
+          bitmapInfo: 0)
+      else { return }
       let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(maskContext.height))
       maskContext.concatenate(flipVertical)
       maskContext.concatenate(ctx.ctm)
@@ -114,8 +108,13 @@ private final class GradientFillLayer: CALayer {
     }
 
     /// Now draw the gradient
-    guard let gradient = CGGradient(colorsSpace: colorSpace, colors: gradientColors as CFArray, locations: colorLocations)
+    guard
+      let gradient = CGGradient(
+        colorsSpace: LottieConfiguration.shared.colorSpace,
+        colors: gradientColors as CFArray,
+        locations: colorLocations)
     else { return }
+
     if type == .linear {
       ctx.drawLinearGradient(gradient, start: start, end: end, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
     } else {
@@ -141,19 +140,19 @@ final class GradientFillRenderer: PassThroughOutputNode, Renderable {
   override init(parent: NodeOutput?) {
     super.init(parent: parent)
 
-    maskLayer.fillColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1, 1, 1, 1])
+    maskLayer.fillColor = .rgb(1, 1, 1)
     gradientLayer.mask = maskLayer
 
     maskLayer.actions = [
-      "startPoint" : NSNull(),
-      "endPoint" : NSNull(),
-      "opacity" : NSNull(),
-      "locations" : NSNull(),
-      "colors" : NSNull(),
-      "bounds" : NSNull(),
-      "anchorPoint" : NSNull(),
-      "isRadial" : NSNull(),
-      "path" : NSNull(),
+      "startPoint": NSNull(),
+      "endPoint": NSNull(),
+      "opacity": NSNull(),
+      "locations": NSNull(),
+      "colors": NSNull(),
+      "bounds": NSNull(),
+      "anchorPoint": NSNull(),
+      "isRadial": NSNull(),
+      "path": NSNull(),
     ]
     gradientLayer.actions = maskLayer.actions
   }
@@ -162,7 +161,7 @@ final class GradientFillRenderer: PassThroughOutputNode, Renderable {
 
   var shouldRenderInContext = false
 
-  var start: CGPoint = .zero {
+  var start = CGPoint.zero {
     didSet {
       hasUpdate = true
     }
@@ -180,7 +179,7 @@ final class GradientFillRenderer: PassThroughOutputNode, Renderable {
     }
   }
 
-  var end: CGPoint = .zero {
+  var end = CGPoint.zero {
     didSet {
       hasUpdate = true
     }
@@ -192,7 +191,7 @@ final class GradientFillRenderer: PassThroughOutputNode, Renderable {
     }
   }
 
-  var type: GradientType = .none {
+  var type = GradientType.none {
     didSet {
       hasUpdate = true
     }

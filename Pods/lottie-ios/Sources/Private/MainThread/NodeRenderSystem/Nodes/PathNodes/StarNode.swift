@@ -23,23 +23,23 @@ final class StarNodeProperties: NodePropertyMap, KeypathSearchable {
     if let innerRadiusKeyframes = star.innerRadius?.keyframes {
       innerRadius = NodeProperty(provider: KeyframeInterpolator(keyframes: innerRadiusKeyframes))
     } else {
-      innerRadius = NodeProperty(provider: SingleValueProvider(Vector1D(0)))
+      innerRadius = NodeProperty(provider: SingleValueProvider(LottieVector1D(0)))
     }
     if let innderRoundedness = star.innerRoundness?.keyframes {
       innerRoundedness = NodeProperty(provider: KeyframeInterpolator(keyframes: innderRoundedness))
     } else {
-      innerRoundedness = NodeProperty(provider: SingleValueProvider(Vector1D(0)))
+      innerRoundedness = NodeProperty(provider: SingleValueProvider(LottieVector1D(0)))
     }
     rotation = NodeProperty(provider: KeyframeInterpolator(keyframes: star.rotation.keyframes))
     points = NodeProperty(provider: KeyframeInterpolator(keyframes: star.points.keyframes))
     keypathProperties = [
-      "Position" : position,
-      "Outer Radius" : outerRadius,
-      "Outer Roundedness" : outerRoundedness,
-      "Inner Radius" : innerRadius,
-      "Inner Roundedness" : innerRoundedness,
-      "Rotation" : rotation,
-      "Points" : points,
+      PropertyName.position.rawValue: position,
+      "Outer Radius": outerRadius,
+      "Outer Roundedness": outerRoundedness,
+      "Inner Radius": innerRadius,
+      "Inner Roundedness": innerRoundedness,
+      PropertyName.rotation.rawValue: rotation,
+      "Points": points,
     ]
     properties = Array(keypathProperties.values)
   }
@@ -52,13 +52,13 @@ final class StarNodeProperties: NodePropertyMap, KeypathSearchable {
   let properties: [AnyNodeProperty]
 
   let direction: PathDirection
-  let position: NodeProperty<Vector3D>
-  let outerRadius: NodeProperty<Vector1D>
-  let outerRoundedness: NodeProperty<Vector1D>
-  let innerRadius: NodeProperty<Vector1D>
-  let innerRoundedness: NodeProperty<Vector1D>
-  let rotation: NodeProperty<Vector1D>
-  let points: NodeProperty<Vector1D>
+  let position: NodeProperty<LottieVector3D>
+  let outerRadius: NodeProperty<LottieVector1D>
+  let outerRoundedness: NodeProperty<LottieVector1D>
+  let innerRadius: NodeProperty<LottieVector1D>
+  let innerRoundedness: NodeProperty<LottieVector1D>
+  let rotation: NodeProperty<LottieVector1D>
+  let points: NodeProperty<LottieVector1D>
 }
 
 // MARK: - StarNode
@@ -134,7 +134,7 @@ extension BezierPath {
     let outerRoundedness = inoutOuterRoundedness * 0.01
     let innerRoundedness = inputInnerRoundedness * 0.01
 
-    var point: CGPoint = .zero
+    var point = CGPoint.zero
 
     var partialPointRadius: CGFloat = 0
     if partialPointAmount != 0 {

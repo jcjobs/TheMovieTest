@@ -5,7 +5,7 @@
 //  Created by Brandon Withrow on 1/8/19.
 //
 
-import Foundation
+// MARK: - TextLayerModel
 
 /// A layer that holds text.
 final class TextLayerModel: LayerModel {
@@ -25,7 +25,7 @@ final class TextLayerModel: LayerModel {
     let textDictionary: [String: Any] = try containerDictionary.value(for: TextCodingKeys.text)
     text = try KeyframeGroup<TextDocument>(dictionary: textDictionary)
     let animatorDictionaries: [[String: Any]] = try containerDictionary.value(for: TextCodingKeys.animators)
-    animators = try animatorDictionaries.map({ try TextAnimator(dictionary: $0) })
+    animators = try animatorDictionaries.map { try TextAnimator(dictionary: $0) }
     try super.init(dictionary: dictionary)
   }
 
@@ -56,3 +56,10 @@ final class TextLayerModel: LayerModel {
     case animators = "a"
   }
 }
+
+// MARK: @unchecked Sendable
+
+/// `TextLayerModel` inherits `@unchecked Sendable` from `LayerModel` and
+/// we need to restate that here to avoid a warning in Xcode 16
+// swiftlint:disable:next no_unchecked_sendable
+extension TextLayerModel: @unchecked Sendable { }
